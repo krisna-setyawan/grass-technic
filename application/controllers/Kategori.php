@@ -17,7 +17,7 @@ class Kategori extends CI_Controller
 
 		$data['profil_toko'] = $this->db->get_where('profil_toko', ['id' => 1])->row_array();
 
-		$data['kategori'] = $this->db->get('kategori')->result();
+		$data['kategori'] = $this->db->get_where('kategori', ['status_delete' => '0'])->result();
 
 		$this->load->view('templates/header');
 		$this->load->view('templates/sidebar', $data);
@@ -87,9 +87,16 @@ class Kategori extends CI_Controller
 
 	public function hapus_kategori($id)
 	{
+		date_default_timezone_set('Asia/Jakarta');
+
 		$where = array('id' => $id);
+		$dt = [
+			'status_delete' => '1',
+			'delete_at' => date('Y-m-d H:i:s'),
+		];
 		$this->db->where($where);
-		$this->db->delete('kategori');
+		$this->db->update('kategori', $dt);
+
 		$this->session->set_flashdata('pesan', '
         <div class="alert alert-danger alert-dismissible" role="alert mb-3">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">

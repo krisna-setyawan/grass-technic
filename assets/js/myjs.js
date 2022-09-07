@@ -115,12 +115,6 @@ function validasi_add_list_penjualan() {
 			title: "Gagal...",
 			text: "id_penjualan kosong!",
 		});
-	} else if ($("#id_suplier").val() == "") {
-		Swal.fire({
-			icon: "error",
-			title: "Gagal...",
-			text: "id_suplier kosong!",
-		});
 	} else if ($("#no_penjualan").val() == "") {
 		Swal.fire({
 			icon: "error",
@@ -153,6 +147,35 @@ function validasi_add_list_penjualan() {
 		});
 	} else {
 		tambahListBarang();
+	}
+}
+function validasi_add_jasa_penjualan() {
+	if ($("#id_penjualan").val() == "") {
+		Swal.fire({
+			icon: "error",
+			title: "Gagal...",
+			text: "id_penjualan kosong!",
+		});
+	} else if ($("#no_penjualan").val() == "") {
+		Swal.fire({
+			icon: "error",
+			title: "Gagal...",
+			text: "no_penjualan kosong!",
+		});
+	} else if ($("#nama_jasa").val() == "") {
+		Swal.fire({
+			icon: "error",
+			title: "Gagal...",
+			text: "Jasa Belum dipilih!",
+		});
+	} else if ($("#tarif").val() == "") {
+		Swal.fire({
+			icon: "error",
+			title: "Gagal...",
+			text: "Tarif Belum diisi!",
+		});
+	} else {
+		tambahJasaBarang();
 	}
 }
 // FORM VALIDATION TAMBAH LIST BARANG PENJUALAN ----------------------------------------------------
