@@ -66,22 +66,20 @@
 						</div>
 					</div>
 
-					<div class="container">
-						<div class="table-responsive">
-							<table class="table table-bordered table-secondary table-hover table-striped" style="white-space: nowrap" width="100%">
-								<thead>
-									<tr class="text-center">
-										<th width="5%">No</th>
-										<th width="20%">Tanggal</th>
-										<th width="25%">Jumlah Pembelian</th>
-										<th width="50%">Jumlah Nominal Pembelian</th>
-									</tr>
-								</thead>
-								<tbody id="isi-table">
+					<div class="table-responsive">
+						<table class="table table-bordered table-secondary table-hover table-striped" style="white-space: nowrap" width="100%">
+							<thead>
+								<tr class="text-center">
+									<th width="5%">No</th>
+									<th width="20%">Tanggal</th>
+									<th width="25%">Jumlah Pembelian</th>
+									<th width="50%">Jumlah Nominal Pembelian</th>
+								</tr>
+							</thead>
+							<tbody id="isi-table">
 
-								</tbody>
-							</table>
-						</div>
+							</tbody>
+						</table>
 					</div>
 
 				</div>

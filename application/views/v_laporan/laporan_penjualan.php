@@ -66,28 +66,26 @@
 						</div>
 					</div>
 
-					<div class="container">
-						<div class="table-responsive">
-							<table class="table table-bordered table-secondary table-hover table-striped" style="white-space: nowrap" width="100%">
-								<thead>
-									<tr class="text-center p-0" style="vertical-align: middle;">
-										<th rowspan="2" width="5%">No</th>
-										<th rowspan="2" width="16%">Tanggal</th>
-										<th colspan="3" width="45%">Jumlah Penjualan</th>
-										<th rowspan="2" width="17%">Jumlah Nominal Jasa</th>
-										<th rowspan="2" width="17%">Jumlah Nominal Penjualan <br> Jasa + Barang</th>
-									</tr>
-									<tr class="text-center p-0">
-										<th width="15%">Penjualan dg Jasa</th>
-										<th width="15%">Penjualan Non-Jasa</th>
-										<th width="15%">Total Penjualan</th>
-									</tr>
-								</thead>
-								<tbody id="isi-table">
+					<div class="table-responsive">
+						<table class="table table-bordered table-secondary table-hover table-striped" style="white-space: nowrap" width="100%">
+							<thead>
+								<tr class="text-center p-0" style="vertical-align: middle;">
+									<th rowspan="2" width="5%">No</th>
+									<th rowspan="2" width="16%">Tanggal</th>
+									<th colspan="3" width="45%">Jumlah Penjualan</th>
+									<th rowspan="2" width="17%">Jumlah Nominal Jasa</th>
+									<th rowspan="2" width="17%">Jumlah Nominal Penjualan <br> Jasa + Barang</th>
+								</tr>
+								<tr class="text-center p-0">
+									<th width="15%">Penjualan dg Jasa</th>
+									<th width="15%">Penjualan Non-Jasa</th>
+									<th width="15%">Total Penjualan</th>
+								</tr>
+							</thead>
+							<tbody id="isi-table">
 
-								</tbody>
-							</table>
-						</div>
+							</tbody>
+						</table>
 					</div>
 
 				</div>

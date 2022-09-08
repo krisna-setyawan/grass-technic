@@ -66,27 +66,25 @@
 						</div>
 					</div>
 
-					<div class="container">
-						<div class="table-responsive">
-							<table class="table table-bordered table-secondary table-hover table-striped" style="white-space: nowrap" width="100%">
-								<thead>
-									<tr class="text-center p-0" style="vertical-align: middle;">
-										<th width="4%">No</th>
-										<th width="11%">Tanggal</th>
-										<th width="12%">Jml Penjualan</th>
-										<th width="12%">Modal Beli</th>
-										<th width="12%">Penjualan</th>
-										<th width="12%">Jasa</th>
-										<th width="12%">Total</th>
-										<th width="12%">Keuntungan</th>
-										<th width="13%">Keuntungan + Jasa</th>
-									</tr>
-								</thead>
-								<tbody id="isi-table">
+					<div class="table-responsive">
+						<table class="table table-bordered table-secondary table-hover table-striped" style="white-space: nowrap" width="100%">
+							<thead>
+								<tr class="text-center p-0" style="vertical-align: middle;">
+									<th width="4%">No</th>
+									<th width="11%">Tanggal</th>
+									<th width="12%">Jml Penjualan</th>
+									<th width="12%">Modal Beli</th>
+									<th width="12%">Penjualan</th>
+									<th width="12%">Jasa</th>
+									<th width="12%">Total</th>
+									<th width="12%">Keuntungan</th>
+									<th width="13%">Keuntungan + Jasa</th>
+								</tr>
+							</thead>
+							<tbody id="isi-table">
 
-								</tbody>
-							</table>
-						</div>
+							</tbody>
+						</table>
 					</div>
 
 				</div>
