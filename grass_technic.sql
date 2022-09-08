@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 07, 2022 at 09:09 AM
+-- Generation Time: Sep 08, 2022 at 07:43 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.25
 
@@ -48,7 +48,7 @@ CREATE TABLE `barang` (
 INSERT INTO `barang` (`id`, `id_kategori`, `kode_barang`, `nama_barang`, `id_suplier`, `harga_beli`, `harga_jual`, `stok`, `status_delete`, `delete_at`, `created_at`) VALUES
 (1, 2, 'BR-001', 'VGA Nvidia', 0, 5000000, 5500000, 0, '0', NULL, '2022-09-07 01:11:19'),
 (2, 2, 'BR-002', 'Monitor LG 19\'', 0, 2000000, 2200000, 3, '0', NULL, '2022-09-07 01:12:10'),
-(3, 1, 'BR-003', 'Keyoboard Laptop Asus', 0, 150000, 200000, 2, '0', NULL, '2022-09-07 01:12:45');
+(3, 1, 'BR-003', 'Keyoboard Laptop Asus', 0, 150000, 200000, 1, '0', NULL, '2022-09-07 01:12:45');
 
 -- --------------------------------------------------------
 
@@ -136,7 +136,8 @@ CREATE TABLE `no_pj_auto` (
 
 INSERT INTO `no_pj_auto` (`id`, `id_penjualan`, `kode_transaksi`, `tanggal`) VALUES
 (3, 1, '070922001', '2022-09-07 07:06:40'),
-(4, 2, '070922002', '2022-09-07 07:07:47');
+(4, 2, '070922002', '2022-09-07 07:07:47'),
+(5, 3, '080922001', '2022-09-08 01:55:35');
 
 -- --------------------------------------------------------
 
@@ -251,7 +252,8 @@ CREATE TABLE `penjualan` (
 
 INSERT INTO `penjualan` (`id`, `no_penjualan`, `nama_pembeli`, `alamat_pembeli`, `no_telp_pembeli`, `tanggal`, `grand_tarif_jasa`, `grand_beli`, `grand_total_barang`, `grand_total`, `grand_laba`, `jumlah_bayar`, `jumlah_kembalian`, `status`, `created_at`) VALUES
 (1, '070922001', 'krisna', 'blitar', '0857305465', '2022-09-07', 60000, 150000, 200000, 260000, 50000, 300000, 40000, 'Selesai', '2022-09-07 07:07:21'),
-(2, '070922002', 'bayuy', 'doko', '08784548458', '2022-09-07', 0, 5000000, 5500000, 5500000, 500000, 5500000, 0, 'Selesai', '2022-09-07 07:08:01');
+(2, '070922002', 'bayuy', 'doko', '08784548458', '2022-09-07', 0, 5000000, 5500000, 5500000, 500000, 5500000, 0, 'Selesai', '2022-09-07 07:08:01'),
+(3, '080922001', 'again', 'alamaat', '08573565265', '2022-09-08', 0, 150000, 200000, 200000, 50000, 200000, 0, 'Selesai', '2022-09-08 01:55:58');
 
 --
 -- Triggers `penjualan`
@@ -303,7 +305,8 @@ CREATE TABLE `penjualan_detail` (
 
 INSERT INTO `penjualan_detail` (`id`, `id_penjualan`, `no_penjualan`, `id_barang`, `kode_barang`, `nama_barang`, `jumlah`, `hg_beli`, `hg_total_beli`, `hg_satuan`, `hg_total`, `laba_total`, `created_at`) VALUES
 (1, 1, '070922001', 3, 'BR-003', 'Keyoboard Laptop Asus', 1, 150000, 150000, 200000, 200000, 50000, '2022-09-07 07:07:02'),
-(2, 2, '070922002', 1, 'BR-001', 'VGA Nvidia', 1, 5000000, 5000000, 5500000, 5500000, 500000, '2022-09-07 07:07:52');
+(2, 2, '070922002', 1, 'BR-001', 'VGA Nvidia', 1, 5000000, 5000000, 5500000, 5500000, 500000, '2022-09-07 07:07:52'),
+(3, 3, '080922001', 3, 'BR-003', 'Keyoboard Laptop Asus', 1, 150000, 150000, 200000, 200000, 50000, '2022-09-08 01:55:49');
 
 --
 -- Triggers `penjualan_detail`
@@ -629,7 +632,7 @@ ALTER TABLE `no_pb_auto`
 -- AUTO_INCREMENT for table `no_pj_auto`
 --
 ALTER TABLE `no_pj_auto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `pembelian`
@@ -647,13 +650,13 @@ ALTER TABLE `pembelian_detail`
 -- AUTO_INCREMENT for table `penjualan`
 --
 ALTER TABLE `penjualan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `penjualan_detail`
 --
 ALTER TABLE `penjualan_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `penjualan_jasa`

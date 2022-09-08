@@ -8,7 +8,7 @@
 <main class="content" style="padding: 10px; background-color: #E7E7E7;">
 	<!-- <div class="container" style="padding: 0px;"> -->
 
-	<h1 class="h3 mb-2 ml-3">Laporan Pembelian</h1>
+	<h1 class="h3 mb-2 ml-3">Laporan Keuntungan</h1>
 
 	<div class="row">
 		<div class="col-12">
@@ -17,7 +17,7 @@
 
 					<div class="row mb-3">
 						<div class="col-md-4 p-1">
-							<h3 id="judul" class="mb-2 ml-3"> <b> Pembelian Bulan <?= date('m') ?> Tahun <?= date('Y') ?> </b> </h3>
+							<h3 id="judul" class="mb-2 ml-3"> <b> Keuntungan Bulan <?= date('m') ?> Tahun <?= date('Y') ?> </b> </h3>
 						</div>
 						<div class="col-md-4">
 							<div class="row text-right">
@@ -70,11 +70,16 @@
 						<div class="table-responsive">
 							<table class="table table-bordered table-secondary table-hover table-striped" style="white-space: nowrap" width="100%">
 								<thead>
-									<tr class="text-center">
-										<th width="5%">No</th>
-										<th width="20%">Tanggal</th>
-										<th width="25%">Jumlah Pembelian</th>
-										<th width="50%">Jumlah Nominal Pembelian</th>
+									<tr class="text-center p-0" style="vertical-align: middle;">
+										<th width="4%">No</th>
+										<th width="11%">Tanggal</th>
+										<th width="12%">Jml Penjualan</th>
+										<th width="12%">Modal Beli</th>
+										<th width="12%">Penjualan</th>
+										<th width="12%">Jasa</th>
+										<th width="12%">Total</th>
+										<th width="12%">Keuntungan</th>
+										<th width="13%">Keuntungan + Jasa</th>
 									</tr>
 								</thead>
 								<tbody id="isi-table">
@@ -130,7 +135,7 @@
 	function load_data() {
 		$.ajax({
 			type: "GET",
-			url: "<?= base_url() ?>laporan/get_laporan_pembelian_bulanan",
+			url: "<?= base_url() ?>laporan/get_laporan_keuntungan_bulanan",
 			success: function(html) {
 				$('#isi-table').html(html);
 			}
@@ -157,9 +162,9 @@
 		$.ajax({
 			type: "POST",
 			data: "&bulan=" + bulan + "&tahun=" + tahun,
-			url: "<?= base_url() ?>laporan/get_laporan_pembelian_bulanan",
+			url: "<?= base_url() ?>laporan/get_laporan_keuntungan_bulanan",
 			success: function(html) {
-				$('#judul').html('<b> Pembelian Bulan ' + bulan + ' Tahun ' + tahun + ' </b>');
+				$('#judul').html('<b> Keuntungan Bulan ' + bulan + ' Tahun ' + tahun + ' </b>');
 				$('#isi-table').html(html);
 			}
 		});
@@ -171,9 +176,9 @@
 		$.ajax({
 			type: "POST",
 			data: "&tgl_awal=" + tgl_awal + "&tgl_akhir=" + tgl_akhir,
-			url: "<?= base_url() ?>laporan/get_laporan_pembelian_custom",
+			url: "<?= base_url() ?>laporan/get_laporan_keuntungan_custom",
 			success: function(html) {
-				$('#judul').html('<b> Pembelian Tanggal <br> ' + tgl_awal + ' sampai ' + tgl_akhir + ' </b>');
+				$('#judul').html('<b> Keuntungan Tanggal <br> ' + tgl_awal + ' sampai ' + tgl_akhir + ' </b>');
 				$('#isi-table').html(html);
 			}
 		});

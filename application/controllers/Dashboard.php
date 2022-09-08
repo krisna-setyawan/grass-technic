@@ -17,6 +17,21 @@ class Dashboard extends CI_Controller
 
 		$data['profil_toko'] = $this->db->get_where('profil_toko', ['id' => 1])->row_array();
 
+		$data['jml_barang'] = $this->db->count_all('barang');
+		$data['jml_suplier'] = $this->db->count_all('suplier');
+
+		date_default_timezone_set('Asia/Jakarta');
+		$hariini = date('Y-m-d');
+
+		$this->db->where('tanggal', $hariini);
+		$data['pj_hariini'] = $this->db->count_all_results('penjualan');
+
+		$this->db->where('status', 'Selesai');
+		$data['pj_selesai'] = $this->db->count_all_results('penjualan');
+
+		$this->db->where('status', 'Proses');
+		$data['pj_proses'] = $this->db->count_all_results('penjualan');
+
 		$this->load->view('templates/header');
 		$this->load->view('templates/sidebar', $data);
 		$this->load->view('templates/topbar', $data);
