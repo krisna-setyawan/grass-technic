@@ -11,6 +11,7 @@ class M_penjualan extends CI_Model
 
 		$this->db->select('penjualan.*');
 		$this->db->from('penjualan');
+		$this->db->order_by('id', 'desc');
 
 		$i = 0;
 		foreach ($this->column_search as $item) { // loop column

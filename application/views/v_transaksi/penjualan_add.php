@@ -141,24 +141,40 @@
 						</table>
 					</div>
 
+					<div class="row">
+					</div>
+
 					<hr>
 
-					<div class="row justify-content-end mt-4">
+					<div class="row justify-content-between mt-4">
+						<div class="col-md-4">
+							<div class="input-group">
+								<div class="input-group-text"> <b>Garansi</b> </div>
+								<select class="form-control form-control-lg" id="garansi" name="garansi">
+									<option selected value="Tidak ada">Tidak ada garansi</option>
+									<option value="1 Minggu">1 Minggu</option>
+									<option value="2 Minggu">2 Minggu</option>
+									<option value="3 Minggu">3 Minggu</option>
+									<option value="4 Minggu">4 Minggu</option>
+									<option value="5 Minggu">5 Minggu</option>
+									<option value="6 Minggu">6 Minggu</option>
+								</select>
+							</div>
+						</div>
+
 						<div class="col-md-4">
 							<div class="input-group input-group-lg mb-2 mr-sm-2">
 								<div class="input-group-text"><b>Bayar Rp.</b></div>
 								<input id="jumlah_bayar" style="height: 60px; font-size: 45px; text-align: right;" onchange="hitung_kembalian()" type="text" min="1000" max="100000000" step="1000" class="form-control" />
 							</div>
 						</div>
+
 						<div class="col-md-4">
 							<div class="input-group input-group-lg mb-2 mr-sm-2">
 								<div class="input-group-text"><b>Kembalian Rp.</b></div>
 								<input id="jumlah_kembalian" style="height: 60px; font-size: 45px; text-align: right;" readonly type="text" min="1000" max="100000000" step="1000" class="form-control" />
 							</div>
 						</div>
-					</div>
-					<div class="row justify-content-end">
-
 					</div>
 
 					<div class="row justify-content-end mt-4">
@@ -238,10 +254,12 @@
 						</tr>
 					</table>
 
+					<p id="detail_garansi">Garansi : -</p>
+
 					<div class="text-center mt-5 mb-3">
-						<a href="#" class="btn btn-secondary">
+						<button type="button" id="btn_print_nota" class="btn btn-secondary">
 							Print Nota Penjualan
-						</a>
+						</button>
 						<br>
 						<br>
 						<a href="<?= base_url() ?>penjualan" class="btn btn-success">
@@ -571,6 +589,7 @@
 
 
 	function simpan_penjualan(id_penjualan) {
+		let garansi = $('#garansi').val();
 		let jumlah_bayar = $('#jumlah_bayar').val();
 		let jumlah_kembalian = $('#jumlah_kembalian').val();
 
@@ -602,6 +621,7 @@
 				type: 'post',
 				url: '<?= base_url() ?>penjualan/simpan_penjualan',
 				data: '&id_penjualan=' + id_penjualan +
+					'&garansi=' + garansi +
 					'&jumlah_bayar=' + bayar +
 					'&jumlah_kembalian=' + kembalian,
 				success: function() {
@@ -639,6 +659,8 @@
 				$('#detail_grand_total').html('Rp. ' + format_rupiah(response.grand_total));
 				$('#detail_jumlah_bayar').html('Rp. ' + format_rupiah(response.jumlah_bayar));
 				$('#detail_jumlah_kembalian').html('Rp. ' + format_rupiah(response.jumlah_kembalian));
+				$('#detail_garansi').html('<b> Garansi : </b> ' + response.garansi);
+				$('#btn_print_nota').attr('onclick', 'print_nota(' + response.id + ')')
 			}
 		})
 		$.ajax({
@@ -664,4 +686,12 @@
 		});
 	}
 	// DETAIL DATA PENJUALAN ------------------------------------------------------------------------- DETAIL DATA PENJUALAN
+
+
+
+
+	function print_nota(id) {
+		var s5_taf_parent = window.location;
+		window.open('<?= base_url() ?>Prints/print_nota/' + id, 'page', 'toolbar=0,scrollbars=1,location=0,statusbar=0,menubar=0,resizable=0,width=900,height=750,left=50,top=50,titlebar=yes')
+	}
 </script>

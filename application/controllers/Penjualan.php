@@ -100,6 +100,7 @@ class Penjualan extends CI_Controller
 			'alamat_pembeli' => $this->input->post('alamat_pembeli'),
 			'no_telp_pembeli' => $this->input->post('no_telp_pembeli'),
 			'tanggal' => $this->input->post('tanggal'),
+			'garansi' => 'Tidak ada',
 		);
 		$this->db->insert('penjualan', $data);
 		$id_penjualan = $this->db->insert_id();
@@ -393,7 +394,8 @@ class Penjualan extends CI_Controller
 	{
 		$id_penjualan = $this->input->post('id_penjualan');
 		$list_penjualan = $this->db->get_where('penjualan_detail', ['id_penjualan' => $id_penjualan])->result_array();
-		if ($list_penjualan) {
+		$list_jasa = $this->db->get_where('penjualan_jasa', ['id_penjualan' => $id_penjualan])->result_array();
+		if ($list_penjualan || $list_jasa) {
 			$data['kodeku'] = 'ada';
 		} else {
 			$data['kodeku'] = 'tidak';
@@ -406,6 +408,7 @@ class Penjualan extends CI_Controller
 		$id_penjualan = $this->input->post('id_penjualan');
 		$jumlah_bayar = $this->input->post('jumlah_bayar');
 		$jumlah_kembalian = $this->input->post('jumlah_kembalian');
+		$garansi = $this->input->post('garansi');
 
 		$result_total = $this->db->query("SELECT 
 										sum(hg_total) as grand_total_barang, 
@@ -428,6 +431,7 @@ class Penjualan extends CI_Controller
 			'grand_laba' => $result_total['grand_laba'],
 			'jumlah_bayar' => $jumlah_bayar,
 			'jumlah_kembalian' => $jumlah_kembalian,
+			'garansi' => $garansi,
 			'status' => 'Selesai',
 		];
 
