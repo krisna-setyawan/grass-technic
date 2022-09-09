@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 09, 2022 at 05:49 AM
+-- Generation Time: Sep 09, 2022 at 08:05 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.25
 
@@ -32,7 +32,6 @@ CREATE TABLE `barang` (
   `id_kategori` int(11) NOT NULL,
   `kode_barang` varchar(30) NOT NULL,
   `nama_barang` varchar(150) NOT NULL,
-  `id_suplier` int(11) NOT NULL,
   `harga_beli` int(11) NOT NULL,
   `harga_jual` int(11) NOT NULL,
   `stok` int(11) NOT NULL,
@@ -45,10 +44,11 @@ CREATE TABLE `barang` (
 -- Dumping data for table `barang`
 --
 
-INSERT INTO `barang` (`id`, `id_kategori`, `kode_barang`, `nama_barang`, `id_suplier`, `harga_beli`, `harga_jual`, `stok`, `status_delete`, `delete_at`, `created_at`) VALUES
-(1, 2, 'BR-001', 'VGA Nvidia', 0, 5000000, 5500000, 1, '0', NULL, '2022-09-07 01:11:19'),
-(2, 2, 'BR-002', 'Monitor LG 19\'', 0, 2000000, 2200000, 2, '0', NULL, '2022-09-07 01:12:10'),
-(3, 1, 'BR-003', 'Keyoboard Laptop Asus', 0, 150000, 200000, 4, '0', NULL, '2022-09-07 01:12:45');
+INSERT INTO `barang` (`id`, `id_kategori`, `kode_barang`, `nama_barang`, `harga_beli`, `harga_jual`, `stok`, `status_delete`, `delete_at`, `created_at`) VALUES
+(1, 2, 'BR-001', 'VGA Nvidia', 5000000, 5500000, 1, '0', NULL, '2022-09-07 01:11:19'),
+(2, 2, 'BR-002', 'Monitor LG 19\'', 2000000, 2200000, 2, '0', NULL, '2022-09-07 01:12:10'),
+(3, 1, 'BR-003', 'Keyoboard Laptop Asus', 150000, 200000, 5, '0', NULL, '2022-09-07 01:12:45'),
+(4, 4, 'BR-004', 'Charge Hp Oppo', 50000, 65000, 6, '0', NULL, '2022-09-09 05:57:14');
 
 -- --------------------------------------------------------
 
@@ -95,7 +95,7 @@ CREATE TABLE `kategori` (
 INSERT INTO `kategori` (`id`, `kategori`, `status_delete`, `delete_at`, `created_at`) VALUES
 (1, 'Spare Part Laptop', '0', NULL, '2022-09-07 00:37:21'),
 (2, 'Spare Part Komputer', '0', NULL, '2022-09-07 00:38:10'),
-(3, 'Spare Part HP', '0', NULL, '2022-09-07 00:38:25');
+(4, 'Spare Part HP', '0', NULL, '2022-09-07 00:38:25');
 
 -- --------------------------------------------------------
 
@@ -116,7 +116,8 @@ CREATE TABLE `no_pb_auto` (
 
 INSERT INTO `no_pb_auto` (`id`, `id_pembelian`, `kode_transaksi`, `tanggal`) VALUES
 (2, 2, 'PB07092201', '2022-09-07 02:34:28'),
-(3, 3, 'PB09092201', '2022-09-09 01:17:15');
+(3, 3, 'PB09092201', '2022-09-09 01:17:15'),
+(4, 4, 'PB09092202', '2022-09-09 06:00:09');
 
 -- --------------------------------------------------------
 
@@ -142,7 +143,8 @@ INSERT INTO `no_pj_auto` (`id`, `id_penjualan`, `kode_transaksi`, `tanggal`) VAL
 (6, 4, '080922002', '2022-09-08 06:12:51'),
 (7, 5, '090922001', '2022-09-09 00:23:31'),
 (8, 6, '090922002', '2022-09-09 01:01:32'),
-(10, 8, '090922003', '2022-09-09 02:16:15');
+(10, 8, '090922003', '2022-09-09 02:16:15'),
+(11, 9, '090922004', '2022-09-09 06:01:39');
 
 -- --------------------------------------------------------
 
@@ -166,7 +168,8 @@ CREATE TABLE `pembelian` (
 
 INSERT INTO `pembelian` (`id`, `no_pembelian`, `id_suplier`, `tanggal`, `grand_total`, `status`, `created_at`) VALUES
 (2, 'PB07092201', 1, '2022-09-07', 2300000, 'Selesai', '2022-09-07 02:34:28'),
-(3, 'PB09092201', 2, '2022-09-09', 5750000, 'Selesai', '2022-09-09 01:17:15');
+(3, 'PB09092201', 2, '2022-09-09', 5750000, 'Selesai', '2022-09-09 01:17:15'),
+(4, 'PB09092202', 1, '2022-09-09', 450000, 'Selesai', '2022-09-09 06:00:09');
 
 --
 -- Triggers `pembelian`
@@ -212,7 +215,9 @@ INSERT INTO `pembelian_detail` (`id`, `id_pembelian`, `id_suplier`, `id_barang`,
 (4, 2, 1, 2, 'BR-002', 'Monitor LG 19\'', 'PB07092201', 1, 2000000, 2000000, '2022-09-07 02:34:36'),
 (5, 2, 1, 3, 'BR-003', 'Keyoboard Laptop Asus', 'PB07092201', 2, 150000, 300000, '2022-09-07 02:35:10'),
 (6, 3, 2, 1, 'BR-001', 'VGA Nvidia', 'PB09092201', 1, 5000000, 5000000, '2022-09-09 01:17:26'),
-(7, 3, 2, 3, 'BR-003', 'Keyoboard Laptop Asus', 'PB09092201', 5, 150000, 750000, '2022-09-09 01:17:32');
+(7, 3, 2, 3, 'BR-003', 'Keyoboard Laptop Asus', 'PB09092201', 5, 150000, 750000, '2022-09-09 01:17:32'),
+(8, 4, 1, 4, 'BR-004', 'Charge Hp Oppo', 'PB09092202', 6, 50000, 300000, '2022-09-09 06:00:15'),
+(10, 4, 1, 3, 'BR-003', 'Keyoboard Laptop Asus', 'PB09092202', 1, 150000, 150000, '2022-09-09 06:00:47');
 
 --
 -- Triggers `pembelian_detail`
@@ -266,7 +271,8 @@ INSERT INTO `penjualan` (`id`, `no_penjualan`, `nama_pembeli`, `alamat_pembeli`,
 (4, '080922002', 'cob', 'alama', '084845465', '2022-09-08', 100000, 0, 0, 100000, 0, 100000, 0, 'Tidak ada', 'Selesai', '2022-09-09 00:22:37'),
 (5, '090922001', 'kris', 'alamaat', '084464748748', '2022-09-09', 60000, 0, 0, 60000, 0, 100000, 40000, 'Tidak ada', 'Selesai', '2022-09-09 00:23:52'),
 (6, '090922002', 'ok', 'wates', '0857652645645', '2022-09-09', 0, 150000, 200000, 200000, 50000, 200000, 0, 'Tidak ada', 'Selesai', '2022-09-09 01:02:07'),
-(8, '090922003', 'coblg', 'alaamt', '0845465456', '2022-09-09', 0, 2150000, 2400000, 2400000, 250000, 2400000, 0, '2 Minggu', 'Selesai', '2022-09-09 02:16:15');
+(8, '090922003', 'coblg', 'alaamt', '0845465456', '2022-09-09', 0, 2150000, 2400000, 2400000, 250000, 2400000, 0, '2 Minggu', 'Selesai', '2022-09-09 02:16:15'),
+(9, '090922004', 'okok', 'alsald', '084524165454', '2022-09-09', 0, 50000, 65000, 65000, 15000, 70000, 5000, '1 Minggu', 'Selesai', '2022-09-09 06:01:39');
 
 --
 -- Triggers `penjualan`
@@ -322,7 +328,8 @@ INSERT INTO `penjualan_detail` (`id`, `id_penjualan`, `no_penjualan`, `id_barang
 (3, 3, '080922001', 3, 'BR-003', 'Keyoboard Laptop Asus', 1, 150000, 150000, 200000, 200000, 50000, '2022-09-08 01:55:49'),
 (7, 6, '090922002', 3, 'BR-003', 'Keyoboard Laptop Asus', 1, 150000, 150000, 200000, 200000, 50000, '2022-09-09 01:01:53'),
 (8, 8, '090922003', 3, 'BR-003', 'Keyoboard Laptop Asus', 1, 150000, 150000, 200000, 200000, 50000, '2022-09-09 02:16:32'),
-(9, 8, '090922003', 2, 'BR-002', 'Monitor LG 19\'', 1, 2000000, 2000000, 2200000, 2200000, 200000, '2022-09-09 02:16:39');
+(9, 8, '090922003', 2, 'BR-002', 'Monitor LG 19\'', 1, 2000000, 2000000, 2200000, 2200000, 200000, '2022-09-09 02:16:39'),
+(10, 9, '090922004', 4, 'BR-004', 'Charge Hp Oppo', 1, 50000, 50000, 65000, 65000, 15000, '2022-09-09 06:01:47');
 
 --
 -- Triggers `penjualan_detail`
@@ -526,7 +533,8 @@ INSERT INTO `user_role` (`id`, `role`) VALUES
 -- Indexes for table `barang`
 --
 ALTER TABLE `barang`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_kategori` (`id_kategori`);
 
 --
 -- Indexes for table `jasa`
@@ -544,25 +552,31 @@ ALTER TABLE `kategori`
 -- Indexes for table `no_pb_auto`
 --
 ALTER TABLE `no_pb_auto`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_pembelian` (`id_pembelian`);
 
 --
 -- Indexes for table `no_pj_auto`
 --
 ALTER TABLE `no_pj_auto`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_penjualan` (`id_penjualan`);
 
 --
 -- Indexes for table `pembelian`
 --
 ALTER TABLE `pembelian`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_suplier` (`id_suplier`);
 
 --
 -- Indexes for table `pembelian_detail`
 --
 ALTER TABLE `pembelian_detail`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_pembelian` (`id_pembelian`),
+  ADD KEY `id_suplier` (`id_suplier`),
+  ADD KEY `id_barang` (`id_barang`);
 
 --
 -- Indexes for table `penjualan`
@@ -574,13 +588,18 @@ ALTER TABLE `penjualan`
 -- Indexes for table `penjualan_detail`
 --
 ALTER TABLE `penjualan_detail`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_penjualan` (`id_penjualan`),
+  ADD KEY `id_penjualan_2` (`id_penjualan`),
+  ADD KEY `id_barang` (`id_barang`);
 
 --
 -- Indexes for table `penjualan_jasa`
 --
 ALTER TABLE `penjualan_jasa`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_penjualan` (`id_penjualan`),
+  ADD KEY `id_jasa` (`id_jasa`);
 
 --
 -- Indexes for table `profil_toko`
@@ -598,13 +617,16 @@ ALTER TABLE `suplier`
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_role` (`id_role`);
 
 --
 -- Indexes for table `user_access_menu`
 --
 ALTER TABLE `user_access_menu`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_user` (`id_user`),
+  ADD KEY `id_menu` (`id_menu`);
 
 --
 -- Indexes for table `user_menu`
@@ -626,7 +648,7 @@ ALTER TABLE `user_role`
 -- AUTO_INCREMENT for table `barang`
 --
 ALTER TABLE `barang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `jasa`
@@ -644,37 +666,37 @@ ALTER TABLE `kategori`
 -- AUTO_INCREMENT for table `no_pb_auto`
 --
 ALTER TABLE `no_pb_auto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `no_pj_auto`
 --
 ALTER TABLE `no_pj_auto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `pembelian`
 --
 ALTER TABLE `pembelian`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `pembelian_detail`
 --
 ALTER TABLE `pembelian_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `penjualan`
 --
 ALTER TABLE `penjualan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `penjualan_detail`
 --
 ALTER TABLE `penjualan_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `penjualan_jasa`
@@ -717,6 +739,69 @@ ALTER TABLE `user_menu`
 --
 ALTER TABLE `user_role`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `barang`
+--
+ALTER TABLE `barang`
+  ADD CONSTRAINT `barang_ibfk_1` FOREIGN KEY (`id_kategori`) REFERENCES `kategori` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `no_pb_auto`
+--
+ALTER TABLE `no_pb_auto`
+  ADD CONSTRAINT `no_pb_auto_ibfk_1` FOREIGN KEY (`id_pembelian`) REFERENCES `pembelian` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `no_pj_auto`
+--
+ALTER TABLE `no_pj_auto`
+  ADD CONSTRAINT `no_pj_auto_ibfk_1` FOREIGN KEY (`id_penjualan`) REFERENCES `penjualan` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `pembelian`
+--
+ALTER TABLE `pembelian`
+  ADD CONSTRAINT `pembelian_ibfk_1` FOREIGN KEY (`id_suplier`) REFERENCES `suplier` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `pembelian_detail`
+--
+ALTER TABLE `pembelian_detail`
+  ADD CONSTRAINT `pembelian_detail_ibfk_1` FOREIGN KEY (`id_pembelian`) REFERENCES `pembelian` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `pembelian_detail_ibfk_2` FOREIGN KEY (`id_suplier`) REFERENCES `suplier` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `pembelian_detail_ibfk_3` FOREIGN KEY (`id_barang`) REFERENCES `barang` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `penjualan_detail`
+--
+ALTER TABLE `penjualan_detail`
+  ADD CONSTRAINT `penjualan_detail_ibfk_1` FOREIGN KEY (`id_penjualan`) REFERENCES `penjualan` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `penjualan_detail_ibfk_2` FOREIGN KEY (`id_barang`) REFERENCES `barang` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `penjualan_jasa`
+--
+ALTER TABLE `penjualan_jasa`
+  ADD CONSTRAINT `penjualan_jasa_ibfk_1` FOREIGN KEY (`id_penjualan`) REFERENCES `penjualan` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `penjualan_jasa_ibfk_2` FOREIGN KEY (`id_jasa`) REFERENCES `jasa` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `user`
+--
+ALTER TABLE `user`
+  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`id_role`) REFERENCES `user_role` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `user_access_menu`
+--
+ALTER TABLE `user_access_menu`
+  ADD CONSTRAINT `user_access_menu_ibfk_1` FOREIGN KEY (`id_menu`) REFERENCES `user_menu` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `user_access_menu_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
