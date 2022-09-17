@@ -1,7 +1,8 @@
 <nav id="sidebar" class="sidebar js-sidebar">
 	<div class="sidebar-content js-simplebar">
 		<p class="sidebar-brand text-center">
-			<img src="<?= base_url() ?>assets/logo/<?= $profil_toko['logo'] ?>" class="avatar img-fluid rounded mr-1" />
+			<img src="<?= base_url() ?>assets/logo/<?= $profil_toko['logo'] ?>" class="avatar img-fluid rounded mr-1 mb-2" />
+			<br>
 			<span class="align-middle"><?= $profil_toko['nama'] ?></span>
 		</p>
 

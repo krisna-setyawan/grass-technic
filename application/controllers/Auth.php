@@ -49,13 +49,9 @@ class Auth extends CI_Controller
 			} else {
 				$this->session->set_flashdata('Pesan', '
                 <center>
-					<div class="alert alert-danger alert-dismissible" role="alert mb-3">
-						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-						<div class="alert-message">
-							<strong>Maaf!</strong> Password Salah!
-						</div>
+					<div class="alert alert-danger alert-dismissible fade show" role="alert">
+						<strong>Maaf!</strong> Password Salah.
+						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 					</div>
                 </center>');
 				redirect('auth');
@@ -63,13 +59,9 @@ class Auth extends CI_Controller
 		} else {
 			$this->session->set_flashdata('Pesan', '
             <center>
-				<div class="alert alert-danger alert-dismissible" role="alert mb-3">
-					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<div class="alert-message">
-						<strong>Maaf!</strong> Username tidak ditemukan!
-					</div>
+				<div class="alert alert-danger alert-dismissible fade show" role="alert">
+					<strong>Maaf!</strong> Username tidak ditemukan!
+					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 				</div>
             </center>');
 			redirect('auth');

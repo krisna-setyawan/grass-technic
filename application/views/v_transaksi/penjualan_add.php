@@ -134,6 +134,8 @@
 							</tbody>
 							<tbody id="list_jasa_penjualan">
 							</tbody>
+							<tbody id="list_diskon">
+							</tbody>
 							<tr>
 								<td colspan="5" style="font-size: larger; text-align: right; padding-right: 5%;"> <b> Grand Total </b> </td>
 								<td colspan="2" id="text_grand_total" style="font-size: larger;"></td>
@@ -148,6 +150,11 @@
 
 					<div class="row justify-content-between mt-4">
 						<div class="col-md-4">
+							<div class="input-group mb-3">
+								<div class="input-group-text"> <b>Diskon Rp.</b> </div>
+								<input id="diskon" type="text" min="1000" max="100000000" step="1000" class="form-control form-control-lg" />
+								<button onclick="hitung_diskon()" class="btn btn-md btn-info">Beri Diskon</button>
+							</div>
 							<div class="input-group">
 								<div class="input-group-text"> <b>Garansi</b> </div>
 								<select class="form-control form-control-lg" id="garansi" name="garansi">
@@ -177,7 +184,7 @@
 						</div>
 					</div>
 
-					<div class="row justify-content-end mt-4">
+					<div class="row justify-content-end mt-3">
 						<div class="col-md-8">
 							<button onclick="validasi_simpan_penjualan(<?= $penjualan['id'] ?>)" class="btn btn-lg btn-block btn-success">Simpan Penjualan</button>
 						</div>
@@ -239,6 +246,8 @@
 						</tbody>
 						<tbody id="detail_list_jasa">
 						</tbody>
+						<tbody id="detail_list_diskon">
+						</tbody>
 
 						<tr>
 							<th colspan="3" class="text-right"> Total </th>
@@ -276,6 +285,9 @@
 	$(document).ready(function() {
 		// Format mata uang.
 		$('#jumlah_bayar').mask('000.000.000', {
+			reverse: true
+		});
+		$('#diskon').mask('000.000.000', {
 			reverse: true
 		});
 	})
@@ -322,6 +334,8 @@
 				let g_total = format_rupiah(data.grand_total);
 				$('#text_grand_total').html('<b> Rp. ' + g_total + '</b>');
 				$('#grand_total').val(data.grand_total);
+
+				$('#list_diskon').html(data.list_diskon);
 			}
 		})
 	}
@@ -535,6 +549,24 @@
 	}
 
 
+	function hitung_diskon() {
+		let id_penjualan = $('#id_penjualan').val();
+		$.ajax({
+			type: 'post',
+			url: '<?= base_url() ?>penjualan/add_diskon',
+			data: '&id_penjualan=' + $('#id_penjualan').val() +
+				'&diskon=' + $('#diskon').val(),
+			success: function() {
+				Swal.fire(
+					'Berhasil!',
+					'Berhasil memberi diskon !',
+					'success'
+				)
+				load_data_penjualan(id_penjualan);
+			}
+		})
+	}
+
 
 	function hitung_kembalian() {
 		let grand_total = $('#grand_total').val();
@@ -660,6 +692,7 @@
 				$('#detail_jumlah_bayar').html('Rp. ' + format_rupiah(response.jumlah_bayar));
 				$('#detail_jumlah_kembalian').html('Rp. ' + format_rupiah(response.jumlah_kembalian));
 				$('#detail_garansi').html('<b> Garansi : </b> ' + response.garansi);
+				$('#detail_list_diskon').html(response.list_diskon);
 				$('#btn_print_nota').attr('onclick', 'print_nota(' + response.id + ')')
 			}
 		})

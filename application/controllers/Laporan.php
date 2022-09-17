@@ -234,7 +234,8 @@ class Laporan extends CI_Controller
 		foreach ($list as $tgl) {
 			// CARI JUMLAH PENJUALAN PER TGL FOREACH
 			$q_jumlah = "SELECT COUNT(id) as jumlah_penjualan, COUNT(NULLIF(grand_tarif_jasa,0)) as jumlah_jasa, 
-						SUM(grand_total) as grand_total, SUM(grand_tarif_jasa) as grand_total_jasa FROM `penjualan` WHERE tanggal = '$tgl'";
+						SUM(grand_total) as grand_total, SUM(grand_tarif_jasa) as grand_total_jasa, SUM(grand_total_barang) as grand_total_barang,  
+						SUM(diskon) as diskon FROM `penjualan` WHERE tanggal = '$tgl'";
 			$jumlah = $this->db->query($q_jumlah)->row_array();
 			$jumlah_non_jasa = $jumlah['jumlah_penjualan'] - $jumlah['jumlah_jasa'];
 
@@ -263,6 +264,16 @@ class Laporan extends CI_Controller
 			} else {
 				echo '<td> </td>';
 			}
+			if ($jumlah['grand_total_barang'] != null) {
+				echo '<td> <b> Rp.' . number_format($jumlah['grand_total_barang'], 0, ',', '.') . ' </b> </td>';
+			} else {
+				echo '<td> </td>';
+			}
+			if ($jumlah['diskon'] != null) {
+				echo '<td> <b> Rp.' . number_format($jumlah['diskon'], 0, ',', '.') . ' </b> </td>';
+			} else {
+				echo '<td> </td>';
+			}
 			if ($jumlah['grand_total'] != null) {
 				echo '<td> <b> Rp.' . number_format($jumlah['grand_total'], 0, ',', '.') . ' </b> </td>';
 			} else {
@@ -273,7 +284,8 @@ class Laporan extends CI_Controller
             ';
 		}
 		$q_jumlah_sebulan = "SELECT COUNT(id) as jumlah_penjualan, COUNT(NULLIF(grand_tarif_jasa,0)) as jumlah_jasa, 
-							SUM(grand_total) as grand_total, SUM(grand_tarif_jasa) as grand_total_jasa FROM `penjualan` 
+							SUM(grand_total) as grand_total, SUM(grand_tarif_jasa) as grand_total_jasa, 
+							SUM(grand_total_barang) as grand_total_barang, SUM(diskon) as diskon FROM `penjualan` 
 							WHERE month(tanggal) = '$month' AND year(tanggal) = '$year'";
 		$jumlah_sebulan = $this->db->query($q_jumlah_sebulan)->row_array();
 		$jumlah_non_jasa_sebulan = $jumlah_sebulan['jumlah_penjualan'] - $jumlah_sebulan['jumlah_jasa'];
@@ -285,6 +297,8 @@ class Laporan extends CI_Controller
             <td><b> ' . $jumlah_non_jasa_sebulan . ' </b></td>
             <td><b> ' . $jumlah_sebulan['jumlah_penjualan'] . ' </b></td>
             <td><b> Rp. ' . number_format($jumlah_sebulan['grand_total_jasa'], 0, ',', '.') . ' </b></td>
+            <td><b> Rp. ' . number_format($jumlah_sebulan['grand_total_barang'], 0, ',', '.') . ' </b></td>
+            <td><b> Rp. ' . number_format($jumlah_sebulan['diskon'], 0, ',', '.') . ' </b></td>
             <td><b> Rp. ' . number_format($jumlah_sebulan['grand_total'], 0, ',', '.') . ' </b></td>
         </tr>
         ';
@@ -319,7 +333,8 @@ class Laporan extends CI_Controller
 
 				// CARI JUMLAH PENJUALAN PER TGL FOREACH
 				$q_jumlah = "SELECT COUNT(id) as jumlah_penjualan, COUNT(NULLIF(grand_tarif_jasa,0)) as jumlah_jasa, 
-						SUM(grand_total) as grand_total, SUM(grand_tarif_jasa) as grand_total_jasa FROM `penjualan` WHERE tanggal = '$tgl'";
+						SUM(grand_total) as grand_total, SUM(grand_tarif_jasa) as grand_total_jasa, SUM(grand_total_barang) as grand_total_barang,  
+						SUM(diskon) as diskon FROM `penjualan` WHERE tanggal = '$tgl'";
 				$jumlah = $this->db->query($q_jumlah)->row_array();
 				$jumlah_non_jasa = $jumlah['jumlah_penjualan'] - $jumlah['jumlah_jasa'];
 
@@ -348,6 +363,16 @@ class Laporan extends CI_Controller
 				} else {
 					echo '<td> </td>';
 				}
+				if ($jumlah['grand_total_barang'] != null) {
+					echo '<td> <b> Rp.' . number_format($jumlah['grand_total_barang'], 0, ',', '.') . ' </b> </td>';
+				} else {
+					echo '<td> </td>';
+				}
+				if ($jumlah['diskon'] != null) {
+					echo '<td> <b> Rp.' . number_format($jumlah['diskon'], 0, ',', '.') . ' </b> </td>';
+				} else {
+					echo '<td> </td>';
+				}
 				if ($jumlah['grand_total'] != null) {
 					echo '<td> <b> Rp.' . number_format($jumlah['grand_total'], 0, ',', '.') . ' </b> </td>';
 				} else {
@@ -359,7 +384,8 @@ class Laporan extends CI_Controller
 			}
 
 			$q_jumlah_sebulan = "SELECT COUNT(id) as jumlah_penjualan, COUNT(NULLIF(grand_tarif_jasa,0)) as jumlah_jasa, 
-							SUM(grand_total) as grand_total, SUM(grand_tarif_jasa) as grand_total_jasa FROM `penjualan` 
+							SUM(grand_total) as grand_total, SUM(grand_tarif_jasa) as grand_total_jasa, 
+							SUM(grand_total_barang) as grand_total_barang, SUM(diskon) as diskon FROM `penjualan` 
 							WHERE tanggal BETWEEN '$tgl_awal' AND '$tgl_akhir'";
 			$jumlah_sebulan = $this->db->query($q_jumlah_sebulan)->row_array();
 			$jumlah_non_jasa_sebulan = $jumlah_sebulan['jumlah_penjualan'] - $jumlah_sebulan['jumlah_jasa'];
@@ -371,6 +397,8 @@ class Laporan extends CI_Controller
 				<td><b> ' . $jumlah_non_jasa_sebulan . ' </b></td>
 				<td><b> ' . $jumlah_sebulan['jumlah_penjualan'] . ' </b></td>
 				<td><b> Rp. ' . number_format($jumlah_sebulan['grand_total_jasa'], 0, ',', '.') . ' </b></td>
+				<td><b> Rp. ' . number_format($jumlah_sebulan['grand_total_barang'], 0, ',', '.') . ' </b></td>
+				<td><b> Rp. ' . number_format($jumlah_sebulan['diskon'], 0, ',', '.') . ' </b></td>
 				<td><b> Rp. ' . number_format($jumlah_sebulan['grand_total'], 0, ',', '.') . ' </b></td>
 			</tr>
 		';
@@ -435,7 +463,7 @@ class Laporan extends CI_Controller
 		foreach ($list as $tgl) {
 			// CARI JUMLAH KEUNTUNGAN PER TGL FOREACH
 			$q_jumlah = "SELECT COUNT(id) as jumlah_penjualan, SUM(grand_beli) as grand_beli, SUM(grand_total_barang) as grand_total_barang, 
-						SUM(grand_total) as grand_total, SUM(grand_tarif_jasa) as grand_total_jasa, SUM(grand_laba) as grand_laba 
+						SUM(grand_total) as grand_total, SUM(diskon) as diskon, SUM(grand_tarif_jasa) as grand_total_jasa, SUM(grand_laba) as grand_laba 
 						FROM `penjualan` WHERE tanggal = '$tgl'";
 			$jumlah = $this->db->query($q_jumlah)->row_array();
 			$laba_jasa = $jumlah['grand_total_jasa'] + $jumlah['grand_laba'];
@@ -470,6 +498,11 @@ class Laporan extends CI_Controller
 			} else {
 				echo '<td> </td>';
 			}
+			if ($jumlah['diskon'] != null) {
+				echo '<td> <b> Rp.' . number_format($jumlah['diskon'], 0, ',', '.') . ' </b> </td>';
+			} else {
+				echo '<td> </td>';
+			}
 			if ($jumlah['grand_laba'] != null) {
 				echo '<td> <b> Rp.' . number_format($jumlah['grand_laba'], 0, ',', '.') . ' </b> </td>';
 			} else {
@@ -485,7 +518,7 @@ class Laporan extends CI_Controller
             ';
 		}
 		$q_jumlah_sebulan = "SELECT COUNT(id) as jumlah_penjualan, SUM(grand_beli) as grand_beli, SUM(grand_total_barang) as grand_total_barang, 
-							SUM(grand_total) as grand_total, SUM(grand_tarif_jasa) as grand_total_jasa, SUM(grand_laba) as grand_laba 
+							SUM(grand_total) as grand_total, SUM(diskon) as diskon, SUM(grand_tarif_jasa) as grand_total_jasa, SUM(grand_laba) as grand_laba 
 							FROM `penjualan` WHERE month(tanggal) = '$month' AND year(tanggal) = '$year'";
 		$jumlah_sebulan = $this->db->query($q_jumlah_sebulan)->row_array();
 		$laba_jasa_sebulan = $jumlah_sebulan['grand_total_jasa'] + $jumlah_sebulan['grand_laba'];
@@ -498,6 +531,7 @@ class Laporan extends CI_Controller
             <td><b> Rp. ' . number_format($jumlah_sebulan['grand_total_barang'], 0, ',', '.') . ' </b></td>
             <td><b> Rp. ' . number_format($jumlah_sebulan['grand_total_jasa'], 0, ',', '.') . ' </b></td>
             <td><b> Rp. ' . number_format($jumlah_sebulan['grand_total'], 0, ',', '.') . ' </b></td>
+            <td><b> Rp. ' . number_format($jumlah_sebulan['diskon'], 0, ',', '.') . ' </b></td>
             <td><b> Rp. ' . number_format($jumlah_sebulan['grand_laba'], 0, ',', '.') . ' </b></td>
             <td><b> Rp. ' . number_format($laba_jasa_sebulan, 0, ',', '.') . ' </b></td>
         </tr>
@@ -533,7 +567,7 @@ class Laporan extends CI_Controller
 
 				// CARI JUMLAH KEUNTUNGAN PER TGL FOREACH
 				$q_jumlah = "SELECT COUNT(id) as jumlah_penjualan, SUM(grand_beli) as grand_beli, SUM(grand_total_barang) as grand_total_barang, 
-						SUM(grand_total) as grand_total, SUM(grand_tarif_jasa) as grand_total_jasa, SUM(grand_laba) as grand_laba 
+						SUM(grand_total) as grand_total, SUM(diskon) as diskon, SUM(grand_tarif_jasa) as grand_total_jasa, SUM(grand_laba) as grand_laba 
 						FROM `penjualan` WHERE tanggal = '$tgl'";
 				$jumlah = $this->db->query($q_jumlah)->row_array();
 				$laba_jasa = $jumlah['grand_total_jasa'] + $jumlah['grand_laba'];
@@ -568,6 +602,11 @@ class Laporan extends CI_Controller
 				} else {
 					echo '<td> </td>';
 				}
+				if ($jumlah['diskon'] != null) {
+					echo '<td> <b> Rp.' . number_format($jumlah['diskon'], 0, ',', '.') . ' </b> </td>';
+				} else {
+					echo '<td> </td>';
+				}
 				if ($jumlah['grand_laba'] != null) {
 					echo '<td> <b> Rp.' . number_format($jumlah['grand_laba'], 0, ',', '.') . ' </b> </td>';
 				} else {
@@ -584,7 +623,7 @@ class Laporan extends CI_Controller
 			}
 
 			$q_jumlah_sebulan = "SELECT COUNT(id) as jumlah_penjualan, SUM(grand_beli) as grand_beli, SUM(grand_total_barang) as grand_total_barang, 
-							SUM(grand_total) as grand_total, SUM(grand_tarif_jasa) as grand_total_jasa, SUM(grand_laba) as grand_laba 
+							SUM(grand_total) as grand_total, SUM(diskon) as diskon, SUM(grand_tarif_jasa) as grand_total_jasa, SUM(grand_laba) as grand_laba 
 							FROM `penjualan` WHERE tanggal BETWEEN '$tgl_awal' AND '$tgl_akhir'";
 			$jumlah_sebulan = $this->db->query($q_jumlah_sebulan)->row_array();
 			$laba_jasa_sebulan = $jumlah_sebulan['grand_total_jasa'] + $jumlah_sebulan['grand_laba'];
@@ -597,6 +636,7 @@ class Laporan extends CI_Controller
 				<td><b> Rp. ' . number_format($jumlah_sebulan['grand_total_barang'], 0, ',', '.') . ' </b></td>
 				<td><b> Rp. ' . number_format($jumlah_sebulan['grand_total_jasa'], 0, ',', '.') . ' </b></td>
 				<td><b> Rp. ' . number_format($jumlah_sebulan['grand_total'], 0, ',', '.') . ' </b></td>
+				<td><b> Rp. ' . number_format($jumlah_sebulan['diskon'], 0, ',', '.') . ' </b></td>
 				<td><b> Rp. ' . number_format($jumlah_sebulan['grand_laba'], 0, ',', '.') . ' </b></td>
 				<td><b> Rp. ' . number_format($laba_jasa_sebulan, 0, ',', '.') . ' </b></td>
 			</tr>

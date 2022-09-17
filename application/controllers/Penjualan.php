@@ -136,6 +136,19 @@ class Penjualan extends CI_Controller
 	{
 		$id_penjualan = $this->input->post('id_penjualan');
 		$data = $this->db->get_where('penjualan', ['id' => $id_penjualan])->row_array();
+
+		$penjualan = $this->db->get_where('penjualan', ['id' => $id_penjualan])->row_array();
+
+		if ($penjualan['diskon'] != 0) {
+			$data['list_diskon'] = '
+			<tr>
+				<td colspan="3"> <b> Diskon </b> </td>
+				<td class="text-right"> <b>- Rp.' . number_format($penjualan['diskon'], 0, ',', '.') . '</b></td>
+			</tr>';
+		} else {
+			$data['list_diskon'] = '';
+		}
+
 		echo json_encode($data);
 	}
 
@@ -285,6 +298,16 @@ class Penjualan extends CI_Controller
 		$this->db->insert('penjualan_jasa', $data_input);
 	}
 
+	public function add_diskon()
+	{
+		$id_penjualan = $this->input->post('id_penjualan');
+		$diskon = str_replace(".", "", $this->input->post('diskon'));
+
+		$dt_update = ['diskon' => $diskon];
+		$this->db->where('id', $id_penjualan);
+		$this->db->update('penjualan', $dt_update);
+	}
+
 
 	public function get_jumlah_list_barang()
 	{
@@ -354,18 +377,30 @@ class Penjualan extends CI_Controller
 										FROM penjualan_jasa 
 										WHERE id_penjualan = '$id_penjualan'")->row_array();
 
+		$penjualan = $this->db->get_where('penjualan', ['id' => $id_penjualan])->row_array();
+
 		if ($result_total) {
 			$data_total['grand_tarif_jasa'] = $result_total_jasa['grand_tarif_jasa'];
-			$data_total['grand_beli'] = $result_total['grand_beli'];
 			$data_total['grand_total_barang'] = $result_total['grand_total_barang'];
-			$data_total['grand_laba'] = $result_total['grand_laba'];
-			$data_total['grand_total'] = $result_total['grand_total_barang'] + $result_total_jasa['grand_tarif_jasa'];
+			$grand_total = $result_total['grand_total_barang'] + $result_total_jasa['grand_tarif_jasa'];
+			$data_total['grand_total'] = $grand_total - $penjualan['diskon'];
 		} else {
 			$data_total['grand_tarif_jasa'] = '0';
-			$data_total['grand_beli'] = '0';
 			$data_total['grand_total_barang'] = '0';
-			$data_total['grand_laba'] = '0';
 			$data_total['grand_total'] = '0';
+		}
+
+		if ($penjualan['diskon'] != 0) {
+			$data_total['list_diskon'] = '
+			<tr>
+				<td>-</td>
+				<td>DSC</td>
+				<td colspan="3">Diskon</td>
+				<td> <b>-</b> Rp.' . number_format($penjualan['diskon'], 0, ',', '.') . '</td>
+				<td></td>
+			</tr>';
+		} else {
+			$data_total['list_diskon'] = '';
 		}
 
 		echo json_encode($data_total);
@@ -422,13 +457,14 @@ class Penjualan extends CI_Controller
 										FROM penjualan_jasa 
 										WHERE id_penjualan = '$id_penjualan'")->row_array();
 
+		$penjualan = $this->db->get_where('penjualan', ['id' => $id_penjualan])->row_array();
+
 		$data_update = [
 			'grand_tarif_jasa' => $result_total_jasa['grand_tarif_jasa'],
 			'grand_beli' => $result_total['grand_beli'],
 			'grand_total_barang' => $result_total['grand_total_barang'],
-			'grand_total_barang' => $result_total['grand_total_barang'],
-			'grand_total' => $result_total['grand_total_barang'] + $result_total_jasa['grand_tarif_jasa'],
-			'grand_laba' => $result_total['grand_laba'],
+			'grand_total' => ($result_total['grand_total_barang'] + $result_total_jasa['grand_tarif_jasa']) - $penjualan['diskon'],
+			'grand_laba' => $result_total['grand_laba'] - $penjualan['diskon'],
 			'jumlah_bayar' => $jumlah_bayar,
 			'jumlah_kembalian' => $jumlah_kembalian,
 			'garansi' => $garansi,

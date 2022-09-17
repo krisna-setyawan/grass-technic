@@ -155,6 +155,8 @@
 						</tbody>
 						<tbody id="detail_list_jasa">
 						</tbody>
+						<tbody id="detail_list_diskon">
+						</tbody>
 
 						<tr>
 							<th colspan="3" class="text-right"> Total </th>
@@ -316,6 +318,7 @@
 				$('#detail_jumlah_bayar').html('Rp. ' + format_rupiah(response.jumlah_bayar));
 				$('#detail_jumlah_kembalian').html('Rp. ' + format_rupiah(response.jumlah_kembalian));
 				$('#detail_garansi').html('<b> Garansi : </b> ' + response.garansi);
+				$('#detail_list_diskon').html(response.list_diskon);
 				$('#btn_print_nota').attr('onclick', 'print_nota(' + response.id + ')')
 			}
 		})

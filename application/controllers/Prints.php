@@ -40,6 +40,16 @@ class Prints extends CI_Controller
 			$data['list_jasa'] = '';
 		}
 
+		if ($data['data_penjualan']['diskon'] != 0) {
+			$data['list_diskon'] = '
+			<tr>
+				<td colspan="3"> <b> Diskon </b> </td>
+				<td class="text-right"> <b>- Rp.' . number_format($data['data_penjualan']['diskon'], 0, ',', '.') . '</b></td>
+			</tr>';
+		} else {
+			$data['list_diskon'] = '';
+		}
+
 		$this->load->view('v_print/nota_penjualan', $data);
 	}
 

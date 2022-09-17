@@ -71,15 +71,17 @@
 							<thead>
 								<tr class="text-center p-0" style="vertical-align: middle;">
 									<th rowspan="2" width="5%">No</th>
-									<th rowspan="2" width="16%">Tanggal</th>
-									<th colspan="3" width="45%">Jumlah Penjualan</th>
-									<th rowspan="2" width="17%">Jumlah Nominal Jasa</th>
-									<th rowspan="2" width="17%">Jumlah Nominal Penjualan <br> Jasa + Barang</th>
+									<th rowspan="2" width="10%">Tanggal</th>
+									<th colspan="3" width="36%">Jumlah Penjualan</th>
+									<th rowspan="2" width="12%">Jumlah Nominal <br> Jasa</th>
+									<th rowspan="2" width="12%">Jumlah Nominal <br> Barang</th>
+									<th rowspan="2" width="12%">Jumlah Diskon</th>
+									<th rowspan="2" width="12%">Jumlah Nominal Penjualan <br> (Jasa + Barang) - Diskon</th>
 								</tr>
 								<tr class="text-center p-0">
-									<th width="15%">Penjualan dg Jasa</th>
-									<th width="15%">Penjualan Non-Jasa</th>
-									<th width="15%">Total Penjualan</th>
+									<th width="12%">Penjualan dg Jasa</th>
+									<th width="12%">Penjualan Non-Jasa</th>
+									<th width="12%">Total Penjualan</th>
 								</tr>
 							</thead>
 							<tbody id="isi-table">

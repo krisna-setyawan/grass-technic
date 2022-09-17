@@ -71,13 +71,14 @@
 							<thead>
 								<tr class="text-center p-0" style="vertical-align: middle;">
 									<th width="4%">No</th>
-									<th width="11%">Tanggal</th>
-									<th width="12%">Jml Penjualan</th>
-									<th width="12%">Modal Beli</th>
-									<th width="12%">Penjualan</th>
-									<th width="12%">Jasa</th>
-									<th width="12%">Total</th>
-									<th width="12%">Keuntungan</th>
+									<th width="10%">Tanggal</th>
+									<th width="10%">Jml Penjualan</th>
+									<th width="11%">Modal Beli</th>
+									<th width="11%">Penjualan</th>
+									<th width="10%">Jasa</th>
+									<th width="10%">Total</th>
+									<th width="10%">Diskon</th>
+									<th width="11%">Keuntungan</th>
 									<th width="13%">Keuntungan + Jasa</th>
 								</tr>
 							</thead>

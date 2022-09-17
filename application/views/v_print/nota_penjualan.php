@@ -78,6 +78,9 @@
 			<tbody id="detail_list_jasa">
 				<?= $list_jasa ?>
 			</tbody>
+			<tbody id="detail_diskon">
+				<?= $list_diskon ?>
+			</tbody>
 
 			<tr>
 				<th colspan="3" class="text-right"> Total </th>
