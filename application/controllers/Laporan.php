@@ -657,8 +657,8 @@ class Laporan extends CI_Controller
 
 		$data['profil_toko'] = $this->db->get_where('profil_toko', ['id' => 1])->row_array();
 
-		$data['banyak'] = $this->db->query('SELECT * FROM barang ORDER BY stok DESC LIMIT 10')->result();
-		$data['sedikit'] = $this->db->query('SELECT * FROM barang ORDER BY stok ASC LIMIT 10')->result();
+		$data['banyak'] = $this->db->query('SELECT * FROM barang WHERE status_delete != 0 ORDER BY stok DESC LIMIT 10')->result();
+		$data['sedikit'] = $this->db->query('SELECT * FROM barang WHERE status_delete != 0 ORDER BY stok ASC LIMIT 10')->result();
 
 		$this->load->view('templates/header');
 		$this->load->view('templates/sidebar', $data);

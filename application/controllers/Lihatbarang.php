@@ -17,7 +17,7 @@ class Lihatbarang extends CI_Controller
 
 		$data['profil_toko'] = $this->db->get_where('profil_toko', ['id' => 1])->row_array();
 
-		$data['barang'] = $this->db->get('barang')->result();
+		$data['barang'] = $this->db->get_where('barang', ['status_delete' => '0'])->result();
 
 		$this->load->view('templates/header');
 		$this->load->view('templates/sidebar', $data);

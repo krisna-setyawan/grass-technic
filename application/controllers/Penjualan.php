@@ -117,8 +117,16 @@ class Penjualan extends CI_Controller
 	public function hapus_penjualan($id)
 	{
 		$where = array('id' => $id);
+
+		$penjualan_detail = $this->db->get_where('penjualan_detail', ['id_penjualan' => $id])->result();
+		foreach ($penjualan_detail as $dtl) {
+			$this->db->where('id', $dtl->id);
+			$this->db->delete('penjualan_detail');
+		}
+
 		$this->db->where($where);
 		$this->db->delete('penjualan');
+
 		$this->session->set_flashdata('pesan', '
         <div class="alert alert-danger alert-dismissible" role="alert mb-3">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -237,7 +245,9 @@ class Penjualan extends CI_Controller
 	{
 		$kd_brg = $this->input->post('kd_brg');
 
-		$this->db->where('kode_barang', $kd_brg);
+		$where = ['kode_barang' => $kd_brg, 'status_delete' => '0'];
+
+		$this->db->where($where);
 		$hasil = $this->db->get('barang')->row_array();
 
 		if ($hasil) {

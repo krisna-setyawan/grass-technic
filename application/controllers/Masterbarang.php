@@ -93,7 +93,7 @@ class Masterbarang extends CI_Controller
 		$edit_harga_jual = str_replace(".", "", $this->input->post('edit_harga_jual'));
 
 		$data = array(
-			'edit_id_kategori' => $this->input->post('edit_id_kategori'),
+			'id_kategori' => $this->input->post('edit_id_kategori'),
 			'kode_barang' => $this->input->post('edit_kode_barang'),
 			'nama_barang' => $this->input->post('edit_nama_barang'),
 			'harga_beli' => $edit_harga_beli,
@@ -119,9 +119,11 @@ class Masterbarang extends CI_Controller
 	public function hapus_barang($id)
 	{
 		date_default_timezone_set('Asia/Jakarta');
+		$barang = $this->db->get_where('barang', ['id' => $id])->row_array();
 
 		$where = array('id' => $id);
 		$dt = [
+			'kode_barang' => 'deleted' . $barang['kode_barang'],
 			'status_delete' => '1',
 			'delete_at' => date('Y-m-d H:i:s'),
 		];

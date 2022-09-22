@@ -116,6 +116,13 @@ class Pembelian extends CI_Controller
 	public function hapus_pembelian($id)
 	{
 		$where = array('id' => $id);
+
+		$pembelian_detail = $this->db->get_where('pembelian_detail', ['id_pembelian' => $id])->result();
+		foreach ($pembelian_detail as $dtl) {
+			$this->db->where('id', $dtl->id);
+			$this->db->delete('pembelian_detail');
+		}
+
 		$this->db->where($where);
 		$this->db->delete('pembelian');
 		$this->session->set_flashdata('pesan', '
