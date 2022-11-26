@@ -157,11 +157,11 @@
 				"url": "<?= base_url('pembelian/get_data') ?>",
 				"type": "POST",
 			},
-			// "order": [
-			//     [1, "desc"]
-			// ],
+			"order": [
+				[2, "desc"]
+			],
 
-			"ordering": false,
+			// "ordering": false,
 			columnDefs: [{
 				"targets": [5, 6],
 				"className": 'text-center'

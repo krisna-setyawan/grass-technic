@@ -3,15 +3,15 @@
 class M_penjualan extends CI_Model
 {
 	// start datatables
-	var $column_order = array(null, 'no_penjualan', 'nama_pembeli', 'tanggal', 'grand_total', 'status'); //set column field database for datatable orderable
-	var $column_search = array('no_penjualan', 'nama_pembeli', 'tanggal', 'grand_total', 'status'); //set column field database for datatable searchable
+	var $column_order = array(null, 'no_penjualan', 'tanggal', 'nama_pembeli', 'grand_total', 'status'); //set column field database for datatable orderable
+	var $column_search = array('no_penjualan', 'tanggal', 'nama_pembeli', 'grand_total', 'status'); //set column field database for datatable searchable
 
 	private function _get_datatables_query()
 	{
 
-		$this->db->select('penjualan.*');
+		$this->db->select('*');
 		$this->db->from('penjualan');
-		$this->db->order_by('id', 'desc');
+		// $this->db->order_by('id', 'desc');
 
 		$i = 0;
 		foreach ($this->column_search as $item) { // loop column

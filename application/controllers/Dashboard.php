@@ -17,7 +17,7 @@ class Dashboard extends CI_Controller
 
 		$data['profil_toko'] = $this->db->get_where('profil_toko', ['id' => 1])->row_array();
 
-		$data['jml_barang'] = $this->db->count_all('barang');
+		$data['jml_barang'] = $this->db->query("SELECT COUNT(*) AS jml_barang FROM barang WHERE status_delete = '0'")->row_array();
 		$data['jml_suplier'] = $this->db->count_all('suplier');
 
 		date_default_timezone_set('Asia/Jakarta');

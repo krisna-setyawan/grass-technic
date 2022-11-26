@@ -17,7 +17,7 @@
 									<div class="row">
 										<div class="col-8">
 											<a href="<?= base_url() ?>/lihatbarang">
-												<h4> Data Barang <br><br><b> <?= $jml_barang ?> Barang</b></h4>
+												<h4> Data Barang <br><br><b> <?= $jml_barang['jml_barang'] ?> Barang</b></h4>
 											</a>
 										</div>
 										<div class="col-4">

@@ -3,8 +3,8 @@
 class M_pembelian extends CI_Model
 {
 	// start datatables
-	var $column_order = array(null, 'no_pembelian', 'tanggal', 'grand_total'); //set column field database for datatable orderable
-	var $column_search = array('no_pembelian', 'suplier.nama', 'tanggal', 'grand_total', 'status'); //set column field database for datatable searchable
+	var $column_order = array(null, 'no_pembelian', 'tanggal', 'suplier.nama', 'grand_total', 'status'); //set column field database for datatable orderable
+	var $column_search = array('no_pembelian', 'tanggal', 'suplier.nama', 'grand_total', 'status'); //set column field database for datatable searchable
 
 	private function _get_datatables_query()
 	{
@@ -12,7 +12,7 @@ class M_pembelian extends CI_Model
 		$this->db->select('pembelian.*, suplier.nama');
 		$this->db->from('pembelian');
 		$this->db->join('suplier', 'pembelian.id_suplier = suplier.id');
-		$this->db->order_by('pembelian.id', 'desc');
+		// $this->db->order_by('pembelian.id', 'desc');
 
 		$i = 0;
 		foreach ($this->column_search as $item) { // loop column
