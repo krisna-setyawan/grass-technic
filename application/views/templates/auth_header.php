@@ -14,7 +14,7 @@
 
 	<title>Login | Grass Technic</title>
 
-	<script script src="<?= base_url() ?>assets/js/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+	<script script src="<?= base_url() ?>assets/js/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
 
 	<!-- BOOTSTRAP 4 -->
 	<!-- <link rel="stylesheet" href="<?= base_url() ?>assets/bootstrap/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->

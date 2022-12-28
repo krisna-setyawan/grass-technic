@@ -1,6 +1,11 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+require('./application/third_party/excel/vendor/autoload.php');
+
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
 class Laporan extends CI_Controller
 {
 
@@ -168,12 +173,202 @@ class Laporan extends CI_Controller
 			$jumlah_sebulan = $this->db->query($q_jumlah_sebulan)->row_array();
 			echo '
 			<tr class="text-center" style="font-size: larger;">
-			    <td colspan="2"><b>Total</b></td>
-			    <td><b> ' . $jumlah_sebulan['jumlah_pembelian'] . ' </b></td>
-			    <td><b> Rp. ' . number_format($jumlah_sebulan['grand_total'], 0, ',', '.') . ' </b></td>
+				<td colspan="2"><b>Total</b></td>
+				<td><b> ' . $jumlah_sebulan['jumlah_pembelian'] . ' </b></td>
+				<td><b> Rp. ' . number_format($jumlah_sebulan['grand_total'], 0, ',', '.') . ' </b></td>
 			</tr>
 			';
 		}
+	}
+
+
+	public function excel_bulanan_pembelian($bulan = null, $tahun = null)
+	{
+		// BUAT LIST TGL DALAM SEBULAN
+		if ($bulan == null) {
+			date_default_timezone_set('Asia/Jakarta');
+			$month = date('m');
+		} else {
+			$month = $bulan;
+		}
+		if ($tahun == null) {
+			date_default_timezone_set('Asia/Jakarta');
+			$year = date('Y');
+		} else {
+			$year = $tahun;
+		}
+
+		for ($d = 1; $d <= 31; $d++) {
+			$time = mktime(12, 0, 0, $month, $d, $year);
+			if (date('m', $time) == $month) {
+				$tgl_list[] = date('d', $time);
+			}
+			if (date('m', $time) == $month) {
+				$list[] = date('Y-m-d', $time);
+			}
+		}
+
+		$spreadsheet = new Spreadsheet;
+
+		$a = $spreadsheet->getActiveSheet();
+
+		$a->mergeCells('A1:D1');
+		$a->setCellValue('A1', 'Laporan Pembelian Bulan ' . $month . ' Tahun ' . $year);
+		$a->getStyle('A1')->applyFromArray(
+			array(
+				'font' => array(
+					'size' => 20,
+					'bold' => true
+				)
+			)
+		);
+
+		$a->getStyle('A1')->getAlignment()->setHorizontal('center');
+
+		$a->getStyle('A3:D3')->applyFromArray(
+			array(
+				'font' => array(
+					'bold' => true
+				),
+				'borders' => array(
+					'allBorders' => array(
+						'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+					)
+				)
+			)
+		);
+
+		$a->setCellValue('A3', 'No');
+		$a->setCellValue('B3', 'Tanggal');
+		$a->setCellValue('C3', 'Jumlah Pembelian');
+		$a->setCellValue('D3', 'Jumlah Nominal Pembelian');
+
+		$a->getColumnDimension('A')->setWidth(5);
+		$a->getColumnDimension('B')->setWidth(20);
+		$a->getColumnDimension('C')->setWidth(40);
+		$a->getColumnDimension('D')->setWidth(40);
+
+
+		$baris = 4;
+		$no = 1;
+		foreach ($list as $tgl) {
+			// CARI JUMLAH PEMBELIAN PER TGL FOREACH
+			$q_jumlah = "SELECT COUNT(id) as jumlah_pembelian, SUM(grand_total) as grand_total FROM `pembelian` WHERE tanggal = '$tgl'";
+			$jumlah = $this->db->query($q_jumlah)->row_array();
+
+			$a->setCellValue('A' . $baris, $no);
+			$a->setCellValue('B' . $baris, $tgl);
+
+			if ($jumlah['jumlah_pembelian'] != 0) {
+				$a->setCellValue('C' . $baris, $jumlah['jumlah_pembelian']);
+			} else {
+				$a->setCellValue('C' . $baris, '');
+			}
+
+			if ($jumlah['grand_total'] != null) {
+				$a->setCellValue('D' . $baris, 'Rp. ' . number_format($jumlah['grand_total'], 0, ',', '.'));
+			} else {
+				$a->setCellValue('D' . $baris, '');
+			}
+
+			$baris++;
+			$no++;
+		}
+
+
+		$writer = new Xlsx($spreadsheet);
+
+		header('Content-Type: application/vnd.ms-excel');
+		header('Content-Disposition: attachment;filename="Laporan Pembelian ' . $month . '-' . $year . '.xlsx"');
+		header('Cache-Control: max-age=0');
+
+		$writer->save('php://output');
+	}
+
+
+	public function excel_custom_pembelian($tgl_awal = null, $tgl_akhir = null)
+	{
+		$begin = new DateTime($tgl_awal);
+		$end = new DateTime($tgl_akhir);
+
+		$spreadsheet = new Spreadsheet;
+
+		$a = $spreadsheet->getActiveSheet();
+
+		$a->mergeCells('A1:D1');
+		$a->setCellValue('A1', 'Laporan Pembelian tgl ' . $tgl_awal . ' sampai ' . $tgl_akhir);
+		$a->getStyle('A1')->applyFromArray(
+			array(
+				'font' => array(
+					'size' => 20,
+					'bold' => true
+				)
+			)
+		);
+
+		$a->getStyle('A1')->getAlignment()->setHorizontal('center');
+
+		$a->getStyle('A3:D3')->applyFromArray(
+			array(
+				'font' => array(
+					'bold' => true
+				),
+				'borders' => array(
+					'allBorders' => array(
+						'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+					)
+				)
+			)
+		);
+
+		$a->setCellValue('A3', 'No');
+		$a->setCellValue('B3', 'Tanggal');
+		$a->setCellValue('C3', 'Jumlah Pembelian');
+		$a->setCellValue('D3', 'Jumlah Nominal Pembelian');
+
+		$a->getColumnDimension('A')->setWidth(5);
+		$a->getColumnDimension('B')->setWidth(20);
+		$a->getColumnDimension('C')->setWidth(40);
+		$a->getColumnDimension('D')->setWidth(40);
+
+
+		$baris = 4;
+		$no = 1;
+		// ---------------------------------------------------------------------------------- //
+		for ($dt = $begin; $dt <= $end; $dt->modify('+1 day')) {
+			$tgl = $dt->format('Y-m-d');
+
+			// CARI JUMLAH PEMBELIAN PER TGL FOREACH
+			$q_jumlah = "SELECT COUNT(id) as jumlah_pembelian, SUM(grand_total) as grand_total FROM `pembelian` WHERE tanggal = '$tgl'";
+			$jumlah = $this->db->query($q_jumlah)->row_array();
+
+			$a->setCellValue('A' . $baris, $no);
+			$a->setCellValue('B' . $baris, $tgl);
+
+			if ($jumlah['jumlah_pembelian'] != 0) {
+				$a->setCellValue('C' . $baris, $jumlah['jumlah_pembelian']);
+			} else {
+				$a->setCellValue('C' . $baris, '');
+			}
+
+			if ($jumlah['grand_total'] != null) {
+				$a->setCellValue('D' . $baris, 'Rp. ' . number_format($jumlah['grand_total'], 0, ',', '.'));
+			} else {
+				$a->setCellValue('D' . $baris, '');
+			}
+
+			$baris++;
+			$no++;
+		}
+
+
+		$writer = new Xlsx($spreadsheet);
+
+		header('Content-Type: application/vnd.ms-excel');
+		header('Content-Disposition: attachment;filename="Laporan Pembelian ' . $tgl_awal . ' sampai ' . $tgl_akhir . '.xlsx"');
+		header('Cache-Control: max-age=0');
+
+		$writer->save('php://output');
 	}
 
 
@@ -657,13 +852,54 @@ class Laporan extends CI_Controller
 
 		$data['profil_toko'] = $this->db->get_where('profil_toko', ['id' => 1])->row_array();
 
-		$data['banyak'] = $this->db->query('SELECT * FROM barang WHERE status_delete != 0 ORDER BY stok DESC LIMIT 10')->result();
-		$data['sedikit'] = $this->db->query('SELECT * FROM barang WHERE status_delete != 0 ORDER BY stok ASC LIMIT 10')->result();
+		$data['banyak'] = $this->db->query('SELECT * FROM barang WHERE status_delete != 0 AND stok != 0 ORDER BY stok DESC LIMIT 10')->result();
+		$data['sedikit'] = $this->db->query('SELECT * FROM barang WHERE status_delete != 0 AND stok != 0 ORDER BY stok ASC LIMIT 10')->result();
+
+		$q_total_modal = "SELECT SUM(harga_beli) as total_modal FROM barang WHERE stok != 0";
+		$data['modal'] = $this->db->query($q_total_modal)->row_array();
+
+		$q_stok_habis = "SELECT COUNT(id) as stok_habis FROM barang WHERE stok = 0";
+		$data['habis'] = $this->db->query($q_stok_habis)->row_array();
 
 		$this->load->view('templates/header');
 		$this->load->view('templates/sidebar', $data);
 		$this->load->view('templates/topbar', $data);
 		$this->load->view('v_laporan/laporan_barang', $data);
 		$this->load->view('templates/footer');
+	}
+
+
+	public function barang_habis()
+	{
+		$barang = $this->db->get_where('barang', ['stok' => 0])->result();
+
+		$html = '';
+
+		$html .= '
+		<div class="table-responsive">
+			<table class="table table-bordered table-striped" style="font-size:15px; border: solid 1px #E5E8E8;white-space: nowrap" id="dataTable" width="100%">
+				<thead>
+					<tr class="text-center">
+						<th width="20%">Kode</th>
+						<th width="60%">Barang</th>
+						<th width="20%">Stok</th>
+					</tr>
+				</thead>
+				<tbody>';
+		foreach ($barang as $br) {
+			$html .= '
+						<tr>
+							<td>' . $br->kode_barang . '</td>
+							<td>' . $br->nama_barang . '</td>
+							<td>' . $br->stok . '</td>
+						</tr>';
+		}
+		$html .= '
+				</tbody>
+			</table>
+		</div>
+		';
+
+		echo json_encode($html);
 	}
 }

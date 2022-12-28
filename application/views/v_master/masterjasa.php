@@ -30,7 +30,7 @@
 										<td><?= $no++ ?></td>
 										<td><?= $js->kode_jasa ?></td>
 										<td><?= $js->nama_jasa ?></td>
-										<td>Rp. <?= number_format($js->tarif, 0, ',', '.') ?></td>
+										<td><?= number_format($js->tarif) ?></td>
 										<td class="text-center">
 											<a>
 												<button onclick="detail(<?= $js->id ?>)" class="badge btn-secondary">Detail</button>
@@ -199,9 +199,7 @@
 			});
 		}, 3000);
 
-		$('#dataTable').dataTable({
-			"ordering": false
-		});
+		$('#dataTable').dataTable();
 
 		// Format mata uang.
 		$('#tarif').mask('000.000.000', {

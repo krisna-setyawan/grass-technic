@@ -13,7 +13,7 @@
 	<title>Grass Technic</title>
 
 	<!-- JQUERY -->
-	<script src="<?= base_url() ?>assets/js/jquery-3.4.1.min.js"></script>
+	<script src="<?= base_url() ?>assets/js/jquery-3.5.1.min.js"></script>
 
 	<!-- MYCSS -->
 	<link href="<?= base_url() ?>assets/css/mycss.css" rel="stylesheet">

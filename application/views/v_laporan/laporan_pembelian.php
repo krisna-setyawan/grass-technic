@@ -16,10 +16,10 @@
 				<div class="card-body" style="padding: 15px;">
 
 					<div class="row mb-3">
-						<div class="col-md-4 p-1">
+						<div class="col-md-5">
 							<h3 id="judul" class="mb-2 ml-3"> <b> Pembelian Bulan <?= date('m') ?> Tahun <?= date('Y') ?> </b> </h3>
 						</div>
-						<div class="col-md-4">
+						<div class="col-md-3">
 							<div class="row text-right">
 								<div class="col-6 p-1">
 									Filter Berdasarkan:
@@ -32,10 +32,10 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-md-4">
-							<div id="pencarian-filter-bulanan" class="input-group input-group-lg mb-2 mr-sm-2">
+						<div class="col-md-3">
+							<div id="pencarian-filter-bulanan" class="input-group input-group-md mb-2 mr-sm-2">
 								<select class="form-control" id="bulan">
-									<option selected value="">Pilih Bulan</option>
+									<option selected value="">Bulan</option>
 									<option value="01">Januari</option>
 									<option value="02">Februari</option>
 									<option value="03">Maret</option>
@@ -50,7 +50,7 @@
 									<option value="12">Desember</option>
 								</select>
 								<select class="form-control" id="tahun">
-									<option selected value="">Pilih Tahun</option>
+									<option selected value="">Tahun</option>
 									<option value="2022">2022</option>
 									<option value="2021">2021</option>
 									<option value="2020">2020</option>
@@ -58,11 +58,16 @@
 								<div class="btn btn-info" onclick="cari_data_bulanan()"><i class="fas fa-search"></i> <b>Cari</b></div>
 							</div>
 
-							<div hidden id="pencarian-filter-custom" class="input-group input-group-lg mb-2 mr-sm-2">
-								<input autocomplete="off" id="tgl_awal" name="tgl_awal" type="text" class="form-control form-control-sm" placeholder="Tanggal Awal">
-								<input autocomplete="off" id="tgl_akhir" name="tgl_akhir" type="text" class="form-control form-control-sm" placeholder="Tanggal Akhir">
+							<div hidden id="pencarian-filter-custom" class="input-group input-group-md mb-2 mr-sm-2">
+								<input autocomplete="off" id="tgl_awal" name="tgl_awal" type="text" class="form-control form-control-sm" placeholder="Awal">
+								<input autocomplete="off" id="tgl_akhir" name="tgl_akhir" type="text" class="form-control form-control-sm" placeholder="Akhir">
 								<div class="btn btn-info" onclick="cari_data_custom()"><i class="fas fa-search"></i> <b>Cari</b></div>
 							</div>
+						</div>
+						<div class="col-md-1">
+							<a style="text-decoration: none;" id="tombol_excel" href="<?= base_url() ?>laporan/excel_bulanan_pembelian/">
+								<button class="btn btn-block btn-success">Excel</button>
+							</a>
 						</div>
 					</div>
 
@@ -159,6 +164,8 @@
 			success: function(html) {
 				$('#judul').html('<b> Pembelian Bulan ' + bulan + ' Tahun ' + tahun + ' </b>');
 				$('#isi-table').html(html);
+				$('#tombol_excel').attr('href', '#');
+				$('#tombol_excel').attr('onclick', 'excel_bulanan()');
 			}
 		});
 	}
@@ -173,7 +180,21 @@
 			success: function(html) {
 				$('#judul').html('<b> Pembelian Tanggal <br> ' + tgl_awal + ' sampai ' + tgl_akhir + ' </b>');
 				$('#isi-table').html(html);
+				$('#tombol_excel').attr('href', '#');
+				$('#tombol_excel').attr('onclick', 'excel_custom()');
 			}
 		});
+	}
+
+	function excel_bulanan() {
+		let bulan = $('#bulan').val();
+		let tahun = $('#tahun').val();
+		window.open('<?= base_url() ?>laporan/excel_bulanan_pembelian/' + bulan + '/' + tahun);
+	}
+
+	function excel_custom() {
+		let tgl_awal = $('#tgl_awal').val();
+		let tgl_akhir = $('#tgl_akhir').val();
+		window.open('<?= base_url() ?>laporan/excel_custom_pembelian/' + tgl_awal + '/' + tgl_akhir);
 	}
 </script>

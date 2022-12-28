@@ -32,8 +32,8 @@
 										<td><?= $no++ ?></td>
 										<td><?= $br->kode_barang ?></td>
 										<td><?= $br->nama_barang ?></td>
-										<td>Rp. <?= number_format($br->harga_beli, 0, ',', '.') ?></td>
-										<td>Rp. <?= number_format($br->harga_jual, 0, ',', '.') ?></td>
+										<td><?= number_format($br->harga_beli) ?></td>
+										<td><?= number_format($br->harga_jual) ?></td>
 										<td><?= $br->stok ?></td>
 										<td class="text-center">
 											<a>
@@ -272,9 +272,7 @@
 			});
 		}, 3000);
 
-		$('#dataTable').dataTable({
-			"ordering": false
-		});
+		$('#dataTable').dataTable();
 
 		// Format mata uang.
 		$('#harga_beli').mask('000.000.000', {
